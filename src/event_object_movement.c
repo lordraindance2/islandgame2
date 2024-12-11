@@ -296,6 +296,7 @@ static void (*const sMovementTypeCallbacks[])(struct Sprite *) =
     [MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_UP] = MovementType_WalkSlowlyInPlace,
     [MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_LEFT] = MovementType_WalkSlowlyInPlace,
     [MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_RIGHT] = MovementType_WalkSlowlyInPlace,
+    [MOVEMENT_TYPE_EMOTE_THINKING] = MovementType_EmoteThinking,
 };
 
 static const bool8 sMovementTypeHasRange[NUM_MOVEMENT_TYPES] = {
@@ -340,6 +341,7 @@ static const bool8 sMovementTypeHasRange[NUM_MOVEMENT_TYPES] = {
     [MOVEMENT_TYPE_COPY_PLAYER_OPPOSITE_IN_GRASS] = TRUE,
     [MOVEMENT_TYPE_COPY_PLAYER_COUNTERCLOCKWISE_IN_GRASS] = TRUE,
     [MOVEMENT_TYPE_COPY_PLAYER_CLOCKWISE_IN_GRASS] = TRUE,
+    [MOVEMENT_TYPE_EMOTE_THINKING] = TRUE,
 };
 
 const u8 gInitialMovementTypeFacingDirections[] = {
@@ -6222,6 +6224,18 @@ bool8 MovementType_Invisible_Step1(struct ObjectEvent *objectEvent, struct Sprit
 bool8 MovementType_Invisible_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     objectEvent->singleMovementActive = FALSE;
+    return FALSE;
+}
+
+movement_type_def(MovementType_EmoteThinking, gMovementTypeFuncs_EmoteThinking)
+
+bool8 MovementType_EmoteThinking_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    ObjectEventGetLocalIdAndMap(objectEvent, &gFieldEffectArguments[0], &gFieldEffectArguments[1], &gFieldEffectArguments[2]);
+    FieldEffectStart(FLDEFF_THINKING_ICON);
+    sprite->animPaused = TRUE;
+    MgbaPrintf(MGBA_LOG_INFO, "EmoteThinking_Step0, RETURNING FALSE");
+
     return FALSE;
 }
 
