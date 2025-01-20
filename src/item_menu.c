@@ -2425,7 +2425,7 @@ static void Task_KeyItemWheel(u8 taskId) {
     case 0:
     {
         LoadSpritePalette(&sSpritePalette_KeyItemBox);
-        LoadSpriteSheetByTemplate(&sSpriteTemplate_KeyItemBox, 0, 0); //islandgame-add: not sure if it's 0. Can compare with: https://github.com/aarant/pokeemerald/blob/key-item-wheel/gflib/sprite.c#L1501
+        LoadSpriteSheetByTemplate(&sSpriteTemplate_KeyItemBox, 0); //islandgame-add: not sure if it's 0. Can compare with: https://github.com/aarant/pokeemerald/blob/key-item-wheel/gflib/sprite.c#L1501
 
         for (i = 0; i < MAX_REGISTERED_ITEMS; i++) {
             // Create box sprite
